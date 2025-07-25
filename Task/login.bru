@@ -1,0 +1,58 @@
+meta {
+  name: login
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://127.0.0.1:8000/api/user/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email":"marie@gmail.com",
+    "password":"12345678vfd"
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  []
+}
+
+body:form-urlencoded {
+  email: 
+  : 
+}
+
+body:multipart-form {
+  : 
+  : @file()
+}
+
+settings {
+  encodeUrl: true
+}
