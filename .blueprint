@@ -1,0 +1,27 @@
+created:
+    - app/Http/Controllers/TaskController.php
+    - app/Http/Controllers/UserTaskController.php
+    - database/factories/TaskFactory.php
+    - database/factories/UserTaskFactory.php
+    - database/migrations/2025_07_29_101043_create_tasks_table.php
+    - database/migrations/2025_07_29_101044_create_user_tasks_table.php
+    - app/Models/Task.php
+    - app/Models/UserTask.php
+    - database/seeders/UserSeeder.php
+    - database/seeders/TaskSeeder.php
+    - database/seeders/UserTaskSeeder.php
+    - tests/Feature/Http/Controllers/TaskControllerTest.php
+    - tests/Feature/Http/Controllers/UserTaskControllerTest.php
+    - app/Http/Requests/TaskStoreRequest.php
+    - app/Http/Requests/TaskUpdateRequest.php
+    - app/Http/Requests/UserTaskStoreRequest.php
+    - app/Http/Requests/UserTaskUpdateRequest.php
+    - app/Http/Resources/TaskCollection.php
+    - app/Http/Resources/TaskResource.php
+    - app/Http/Resources/UserTaskCollection.php
+    - app/Http/Resources/UserTaskResource.php
+updated:
+    - routes/api.php
+models:
+    Task: { title: string, description: text, due_date: date, status: string, timestamps: timestamps }
+    UserTask: { user_id: 'id foreign', task_id: 'id foreign', assigned_at: datetime }

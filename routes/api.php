@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\UserTaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,17 +19,20 @@ use Illuminate\Support\Facades\Route;
 // Inclure les routes d'authentification Breeze
 //  require __DIR__.'/auth.php';
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('user')->group(function () {
+    Route::post('/login', [UserController::class, 'login']);
+    Route::post('/register',[UserController::class,'register']);
+    Route::post('/logout',[UserController::class,'logout']);
 });
 
-Route::middleware(['auth:sanctum'])->prefix('tasks')->group(function () {
-    Route::get('/', [App\Http\Controllers\Api\TaskController::class, 'index']);
-    Route::post('/', [App\Http\Controllers\Api\TaskController::class, 'store']);
-    Route::get('/{task}', [App\Http\Controllers\Api\TaskController::class, 'show']);
-    // Route::put('/{task}', [App\Http\Controllers\Api\TaskController::class, 'update']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get("/user", function(Request $request){
+        return $request->user();
+    });
+    Route::apiResource('tasks', TaskController::class);
+    Route::apiResource('user-tasks', UserTaskController::class);
 });
 
-Route::post('/user/login', [App\Http\Controllers\Api\UserController::class, 'login']);
-Route::post('/user/register',[App\Http\Controllers\Api\UserController::class,'register']);
-Route::post('/user/logout',[App\Http\Controllers\Api\UserController::class,'logout']);
+
+

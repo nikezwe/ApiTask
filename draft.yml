@@ -1,0 +1,24 @@
+models:
+  Task:
+    title: string
+    description: text
+    due_date: date
+    status: string
+    timestamps: true
+
+  UserTask:
+    user_id: id foreign
+    task_id: id foreign
+    assigned_at: datetime
+
+
+seeders:
+  User, Task, UserTask
+
+controllers:
+  Task:
+    resource: api
+
+  UserTask:
+    resource: api
+
