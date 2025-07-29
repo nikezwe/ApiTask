@@ -4,10 +4,14 @@ meta {
   seq: 2
 }
 
-get {
-  url: 
+post {
+  url: http://10.42.0.115:8000/api/tasks
   body: none
-  auth: inherit
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|sXYz4QWFAqyGJ6bDkbjUD7cSpkVBtxtkk5s1obna4917da89
 }
 
 settings {

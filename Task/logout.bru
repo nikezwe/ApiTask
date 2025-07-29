@@ -1,0 +1,20 @@
+meta {
+  name: logout
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://127.0.0.1:8000/api/user/logout?username=estime&email=estime@gmail.com
+  body: none
+  auth: inherit
+}
+
+params:query {
+  username: estime
+  email: estime@gmail.com
+}
+
+settings {
+  encodeUrl: true
+}

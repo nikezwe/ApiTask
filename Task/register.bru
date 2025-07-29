@@ -5,9 +5,15 @@ meta {
 }
 
 post {
-  url: 
-  body: none
+  url: http://127.0.0.1:8000/api/user/register
+  body: formUrlEncoded
   auth: inherit
+}
+
+body:form-urlencoded {
+  username: estime
+  email: estime@gmail.com
+  password: 12345678
 }
 
 settings {
