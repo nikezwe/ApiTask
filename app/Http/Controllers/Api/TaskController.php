@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    // ✅ Liste des tâches de l'utilisateur connecté
     public function index()
     {
-        $tasks = Task::latest()->paginate();
-
+        $tasks = Task::where('user_id', auth()->id())->latest()->get();
         return response()->json($tasks);
     }
 
+    // ✅ Créer une tâche
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -24,20 +25,27 @@ class TaskController extends Controller
             'due_date' => 'nullable|date'
         ]);
 
+        $validated['user_id'] = auth()->id();
+
         $task = Task::create($validated);
 
         return response()->json($task, 201);
     }
 
-    public function show(Task $task)
+    // ✅ Afficher une tâche
+    public function show($id)
     {
+        $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
         return response()->json($task);
     }
 
-    public function update(Request $request, Task $task)
+    // ✅ Modifier une tâche
+    public function update(Request $request, $id)
     {
+        $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+
         $validated = $request->validate([
-            'title' => 'string|max:255',
+            'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
             'status' => 'in:pending,in_progress,completed',
             'priority' => 'in:low,medium,high',
@@ -49,10 +57,19 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function destroy(Task $task)
-    {
-        $task->delete();
 
-        return response()->json($task);
+// Supprimer une tâche
+public function destroy(Task $task)
+{
+    // Vérifier que la tâche appartient bien à l’utilisateur connecté
+    if ($task->user_id !== auth()->id()) {
+        return response()->json(['error' => 'Unauthorized'], 403);
     }
+
+    $task->delete();
+
+    return response()->json(['message' => 'Deleted successfully']);
+}
+
+
 }

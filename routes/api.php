@@ -11,28 +11,26 @@ use Illuminate\Support\Facades\Route;
 | API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Ici on déclare toutes les routes API protégées par Sanctum.
 |
 */
-// Inclure les routes d'authentification Breeze
-//  require __DIR__.'/auth.php';
 
 Route::prefix('user')->group(function () {
+    // Authentification publique
     Route::post('/login', [UserController::class, 'login']);
-    Route::post('/register',[UserController::class,'register']);
-    Route::post('/logout',[UserController::class,'logout']);
+    Route::post('/register', [UserController::class, 'register']);
+
+    // Logout protégé (token nécessaire)
+    Route::middleware('auth:sanctum')->post('/logout', [UserController::class, 'logout']);
 });
 
-
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get("/user", function(Request $request){
+    // Récupération des infos utilisateur connecté
+    Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    // Gestion des tâches
     Route::apiResource('tasks', TaskController::class);
     Route::apiResource('user-tasks', UserTaskController::class);
 });
-
-
-
